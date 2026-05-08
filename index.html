@@ -2,15 +2,14 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estúdio AEC - Gestão de Reuniões</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Estúdio AEC - Mobile First</title>
     
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <style>
         :root {
-            /* Paleta de Cores - Dark Mode AEC Tech */
             --bg-color: #0d1117;
             --surface-color: #161b22;
             --surface-hover: #21262d;
@@ -20,18 +19,16 @@
             --accent-color: #2f81f7;
             --accent-hover: #388bfd;
             --danger-color: #f85149;
-            
-            /* Tipografia e Espaçamento */
             --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --transition-speed: 0.2s;
+            --radius-md: 10px;
+            --header-height: 70px;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -39,186 +36,216 @@
             background-color: var(--bg-color);
             color: var(--text-primary);
             height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
 
-        /* Cabeçalho */
+        /* Header Adaptável */
         header {
-            padding: 20px 32px;
+            height: var(--header-height);
+            min-height: var(--header-height);
+            padding: 0 20px;
             background-color: var(--surface-color);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
+            z-index: 100;
         }
 
-        header h1 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            letter-spacing: -0.5px;
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        header i {
+        .header-brand i {
             font-size: 1.5rem;
             color: var(--accent-color);
         }
 
-        /* Layout Principal */
+        .header-brand h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        #btn-back-mobile {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            margin-left: -10px;
+        }
+
+        /* Container Principal */
         main {
             display: flex;
             flex: 1;
+            position: relative;
             overflow: hidden;
         }
 
-        /* Painel Esquerdo (Reuniões) */
+        /* Painel Esquerdo (Lista) */
         .sidebar {
             width: 350px;
             background-color: var(--bg-color);
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
         }
 
-        .panel-header {
-            padding: 24px 24px 16px;
-        }
-
-        .panel-header h2 {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-
-        /* Formulários e Inputs */
-        .input-group {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        input[type="datetime-local"],
-        input[type="text"] {
-            flex: 1;
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 10px 12px;
-            border-radius: var(--radius-md);
-            font-family: var(--font-family);
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color var(--transition-speed);
-            color-scheme: dark;
-        }
-
-        input:focus {
-            border-color: var(--accent-color);
-        }
-
-        button.btn-add {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            width: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color var(--transition-speed);
-        }
-
-        button.btn-add:hover {
-            background-color: var(--accent-hover);
-        }
-
-        /* Listas e Blocos (Cards) */
-        .list-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 0 24px 24px;
-        }
-
-        .block-card {
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: all var(--transition-speed);
-            user-select: none;
-        }
-
-        .block-card:hover {
-            border-color: #484f58;
-            background-color: var(--surface-hover);
-        }
-
-        .block-card.active {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 1px var(--accent-color);
-        }
-
-        .drag-handle {
-            color: var(--text-secondary);
-            cursor: grab;
-            display: flex;
-            align-items: center;
-        }
-
-        .drag-handle:active {
-            cursor: grabbing;
-        }
-
-        .card-content {
-            flex: 1;
-        }
-
-        .card-title {
-            font-weight: 500;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-        }
-
-        .card-subtitle {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .btn-delete {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: 4px;
-            border-radius: 4px;
-            transition: color var(--transition-speed);
-            display: flex;
-            align-items: center;
-        }
-
-        .btn-delete:hover {
-            color: var(--danger-color);
-        }
-
-        /* Painel Direito (Pautas) */
+        /* Painel Direito (Detalhes) */
         .main-content {
             flex: 1;
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .empty-state {
+        /* Mobile Adjustments (O segredo da fluidez) */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+            .main-content {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                transform: translateX(100%); /* Escondido à direita */
+            }
+
+            /* Quando o modo detalhe está ativo */
+            body.view-detail .sidebar {
+                transform: translateX(-100%);
+            }
+            body.view-detail .main-content {
+                transform: translateX(0);
+            }
+            body.view-detail #btn-back-mobile {
+                display: block;
+            }
+            body.view-detail .header-brand {
+                display: none;
+            }
+        }
+
+        /* Estilização de Inputs e Botões */
+        .panel-header {
+            padding: 20px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        input {
+            flex: 1;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 14px; /* Maior para touch */
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            outline: none;
+            color-scheme: dark;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0 16px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Cards e Listas */
+        .list-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .card-item {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            gap: 12px;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-item.active {
+            border-color: var(--accent-color);
+            background-color: var(--surface-hover);
+        }
+
+        .drag-handle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            cursor: grab;
+            padding: 5px;
+        }
+
+        .card-info {
+            flex: 1;
+        }
+
+        .card-title {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .btn-icon-danger {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            padding: 8px;
+        }
+
+        /* Estados de Agenda */
+        .agenda-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+
+        .agenda-header h2 {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        .empty-view {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -226,321 +253,215 @@
             justify-content: center;
             color: var(--text-secondary);
             text-align: center;
+            padding: 40px;
         }
 
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-
-        #agenda-section {
-            display: none;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        /* Estilos específicos para a lista de pautas */
-        .agenda-item {
-            padding: 12px 16px;
-            background-color: var(--bg-color);
-        }
-        
-        .agenda-item.sortable-ghost {
-            opacity: 0.4;
-            background-color: var(--surface-hover);
-        }
-
-        .meeting-info-header {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .meeting-info-header h3 {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-        }
-
-        .meeting-info-header span {
-            color: var(--accent-color);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Scrollbar customizada */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-secondary);
+        .empty-view i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <i class="ph ph-hexagon"></i>
-        <h1>Estúdio AEC | Gestão de Agendas</h1>
-    </header>
+        <button id="btn-back-mobile" onclick="goBack()">
+            <i class="ph ph-caret-left"></i> Voltar
+        </button>
+        <div class="header-brand">
+            <i class="ph ph-hexagon-fill"></i>
+            <h1>Estúdio AEC</h1>
+        </div>
+        <div style="width: 40px;"></div> </header>
 
     <main>
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="panel-header">
-                <h2>Datas e Reuniões</h2>
-                <div class="input-group">
-                    <input type="datetime-local" id="new-meeting-date" title="Escolha a data e hora">
-                    <button class="btn-add" onclick="addMeeting()" title="Criar nova reunião">
-                        <i class="ph ph-plus"></i>
+                <p style="color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; font-weight: 700;">Nova Reunião</p>
+                <div class="input-wrapper">
+                    <input type="datetime-local" id="input-date">
+                    <button class="btn-primary" onclick="createMeeting()">
+                        <i class="ph ph-plus-bold"></i>
                     </button>
                 </div>
             </div>
-            <div class="list-container" id="meetings-list">
-                </div>
+            <div class="list-scroll" id="meeting-list"></div>
         </aside>
 
-        <section class="main-content">
-            <div id="empty-state" class="empty-state">
-                <i class="ph ph-calendar-blank"></i>
-                <p>Selecione ou crie uma reunião ao lado <br> para gerenciar suas pautas.</p>
+        <section class="main-content" id="main-content">
+            <div id="active-meeting-view" style="display: none; flex-direction: column; height: 100%;">
+                <div class="agenda-header">
+                    <h2 id="display-meeting-date">Data da Reunião</h2>
+                    <p id="display-meeting-count" style="font-size: 0.9rem; color: var(--text-secondary);">0 pautas definidas</p>
+                </div>
+
+                <div class="panel-header">
+                    <div class="input-wrapper">
+                        <input type="text" id="input-agenda" placeholder="Adicionar pauta..." onkeypress="checkEnter(event)">
+                        <button class="btn-primary" onclick="addAgenda()">
+                            <i class="ph ph-paper-plane-tilt-bold"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="list-scroll" id="agenda-list"></div>
             </div>
 
-            <div id="agenda-section" style="padding: 24px; display: none;">
-                <div class="meeting-info-header">
-                    <h3 id="current-meeting-title">Reunião</h3>
-                    <span id="current-meeting-subtitle"><i class="ph ph-clock"></i> Data e Hora</span>
-                </div>
-
-                <div class="input-group" style="max-width: 600px;">
-                    <input type="text" id="new-agenda-input" placeholder="Digite uma nova pauta e aperte Enter..." onkeypress="handleAgendaKeyPress(event)">
-                    <button class="btn-add" onclick="addAgendaItem()" title="Adicionar pauta">
-                        <i class="ph ph-plus"></i>
-                    </button>
-                </div>
-
-                <div class="list-container" id="agenda-list" style="padding: 0; max-width: 600px; margin-top: 16px;">
-                    </div>
+            <div id="no-selection" class="empty-view">
+                <i class="ph ph-calendar-plus"></i>
+                <p>Selecione uma reunião ou crie uma nova para gerenciar as pautas.</p>
             </div>
         </section>
     </main>
 
     <script>
-        // Inicialização do Estado (Lendo do LocalStorage)
-        let meetings = JSON.parse(localStorage.getItem('aec_meetings_data')) || [];
-        let activeMeetingId = null;
+        let meetings = JSON.parse(localStorage.getItem('aec_data_v2')) || [];
+        let selectedId = null;
 
-        // Instâncias do SortableJS
-        let sortableMeetings;
-        let sortableAgendas;
+        // Renderiza as reuniões na barra lateral
+        function renderMeetings() {
+            const container = document.getElementById('meeting-list');
+            container.innerHTML = '';
 
-        // Formatação de data/hora (Padrão BR)
-        const formatDateTime = (dateString) => {
-            const date = new Date(dateString);
-            return new Intl.DateTimeFormat('pt-BR', {
-                day: '2-digit', month: '2-digit', year: 'numeric',
-                hour: '2-digit', minute: '2-digit'
-            }).format(date);
-        };
+            meetings.forEach(m => {
+                const isActive = m.id === selectedId;
+                const div = document.createElement('div');
+                div.className = `card-item ${isActive ? 'active' : ''}`;
+                div.onclick = () => selectMeeting(m.id);
+                
+                const dateLabel = new Date(m.date).toLocaleString('pt-BR', {
+                    day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
+                });
 
-        // Salvar dados
-        const saveData = () => {
-            localStorage.setItem('aec_meetings_data', JSON.stringify(meetings));
-        };
-
-        // Renderizar a lista de Reuniões
-        const renderMeetings = () => {
-            const listElement = document.getElementById('meetings-list');
-            listElement.innerHTML = '';
-
-            meetings.forEach(meeting => {
-                const isActive = meeting.id === activeMeetingId;
-                const dateFormatted = formatDateTime(meeting.datetime);
-                const pautasCount = meeting.agendas ? meeting.agendas.length : 0;
-
-                const card = document.createElement('div');
-                card.className = `block-card ${isActive ? 'active' : ''}`;
-                card.dataset.id = meeting.id;
-                card.onclick = () => selectMeeting(meeting.id);
-
-                card.innerHTML = `
-                    <div class="drag-handle" title="Arrastar">
-                        <i class="ph ph-dots-six-vertical"></i>
+                div.innerHTML = `
+                    <div class="drag-handle"><i class="ph ph-dots-six-vertical"></i></div>
+                    <div class="card-info">
+                        <div class="card-title">${dateLabel}</div>
+                        <div class="card-meta">${m.agendas.length} pautas</div>
                     </div>
-                    <div class="card-content">
-                        <div class="card-title">${dateFormatted}</div>
-                        <div class="card-subtitle">${pautasCount} pauta(s)</div>
-                    </div>
-                    <button class="btn-delete" onclick="deleteMeeting('${meeting.id}', event)" title="Excluir reunião">
+                    <button class="btn-icon-danger" onclick="deleteMeeting(event, '${m.id}')">
                         <i class="ph ph-trash"></i>
                     </button>
                 `;
-                listElement.appendChild(card);
+                container.appendChild(div);
             });
 
-            // Inicializar/Atualizar Drag and Drop para Reuniões
-            if (sortableMeetings) sortableMeetings.destroy();
-            sortableMeetings = new Sortable(listElement, {
-                animation: 150,
+            new Sortable(container, {
                 handle: '.drag-handle',
-                ghostClass: 'sortable-ghost',
-                onEnd: function (evt) {
-                    // Reordenar array
-                    const itemEl = meetings.splice(evt.oldIndex, 1)[0];
-                    meetings.splice(evt.newIndex, 0, itemEl);
-                    saveData();
-                },
+                animation: 200,
+                onEnd: (evt) => {
+                    const item = meetings.splice(evt.oldIndex, 1)[0];
+                    meetings.splice(evt.newIndex, 0, item);
+                    save();
+                }
             });
-        };
+        }
 
-        // Renderizar a lista de Pautas
-        const renderAgendas = () => {
-            const listElement = document.getElementById('agenda-list');
-            listElement.innerHTML = '';
+        // Renderiza as pautas da reunião ativa
+        function renderAgendas() {
+            const container = document.getElementById('agenda-list');
+            container.innerHTML = '';
             
-            const meeting = meetings.find(m => m.id === activeMeetingId);
+            const meeting = meetings.find(m => m.id === selectedId);
             if (!meeting) return;
 
-            (meeting.agendas || []).forEach(agenda => {
-                const card = document.createElement('div');
-                card.className = 'block-card agenda-item';
-                card.dataset.id = agenda.id;
+            document.getElementById('display-meeting-date').innerText = new Date(meeting.date).toLocaleString('pt-BR');
+            document.getElementById('display-meeting-count').innerText = `${meeting.agendas.length} pautas definidas`;
 
-                card.innerHTML = `
-                    <div class="drag-handle" title="Arrastar">
-                        <i class="ph ph-dots-six-vertical"></i>
+            meeting.agendas.forEach(a => {
+                const div = document.createElement('div');
+                div.className = 'card-item';
+                div.innerHTML = `
+                    <div class="drag-handle"><i class="ph ph-dots-six-vertical"></i></div>
+                    <div class="card-info">
+                        <div class="card-title">${a.text}</div>
                     </div>
-                    <div class="card-content">
-                        <div class="card-title">${agenda.text}</div>
-                    </div>
-                    <button class="btn-delete" onclick="deleteAgenda('${agenda.id}')" title="Excluir pauta">
-                        <i class="ph ph-trash"></i>
+                    <button class="btn-icon-danger" onclick="deleteAgenda('${a.id}')">
+                        <i class="ph ph-x-circle"></i>
                     </button>
                 `;
-                listElement.appendChild(card);
+                container.appendChild(div);
             });
 
-            // Inicializar/Atualizar Drag and Drop para Pautas
-            if (sortableAgendas) sortableAgendas.destroy();
-            sortableAgendas = new Sortable(listElement, {
-                animation: 150,
+            new Sortable(container, {
                 handle: '.drag-handle',
-                ghostClass: 'sortable-ghost',
-                onEnd: function (evt) {
-                    const meetingIndex = meetings.findIndex(m => m.id === activeMeetingId);
-                    const itemEl = meetings[meetingIndex].agendas.splice(evt.oldIndex, 1)[0];
-                    meetings[meetingIndex].agendas.splice(evt.newIndex, 0, itemEl);
-                    saveData();
-                },
+                animation: 200,
+                onEnd: (evt) => {
+                    const item = meeting.agendas.splice(evt.oldIndex, 1)[0];
+                    meeting.agendas.splice(evt.newIndex, 0, item);
+                    save();
+                }
             });
-        };
+        }
 
-        // Adicionar nova Reunião
-        const addMeeting = () => {
-            const dateInput = document.getElementById('new-meeting-date');
-            if (!dateInput.value) {
-                alert('Por favor, selecione uma data e hora.');
-                return;
-            }
+        // Ações
+        function createMeeting() {
+            const dateVal = document.getElementById('input-date').value;
+            if (!dateVal) return;
 
-            const newMeeting = {
-                id: 'meet_' + Date.now().toString(),
-                datetime: dateInput.value,
+            const newM = {
+                id: 'm' + Date.now(),
+                date: dateVal,
                 agendas: []
             };
 
-            meetings.unshift(newMeeting); // Adiciona no topo
-            saveData();
-            dateInput.value = '';
-            selectMeeting(newMeeting.id);
-        };
+            meetings.unshift(newM);
+            save();
+            renderMeetings();
+            selectMeeting(newM.id);
+        }
 
-        // Excluir Reunião
-        const deleteMeeting = (id, event) => {
-            event.stopPropagation(); // Evita acionar o clique do card
-            if(confirm('Tem certeza que deseja excluir esta reunião e todas as suas pautas?')) {
-                meetings = meetings.filter(m => m.id !== id);
-                if (activeMeetingId === id) {
-                    activeMeetingId = null;
-                    updateMainPanelVisibility();
-                }
-                saveData();
-                renderMeetings();
-            }
-        };
+        function selectMeeting(id) {
+            selectedId = id;
+            document.body.classList.add('view-detail');
+            document.getElementById('no-selection').style.display = 'none';
+            document.getElementById('active-meeting-view').style.display = 'flex';
+            renderMeetings();
+            renderAgendas();
+        }
 
-        // Selecionar Reunião
-        const selectMeeting = (id) => {
-            activeMeetingId = id;
-            renderMeetings(); // Atualiza a classe 'active'
-            updateMainPanelVisibility();
+        function addAgenda() {
+            const input = document.getElementById('input-agenda');
+            if (!input.value.trim()) return;
+
+            const meeting = meetings.find(m => m.id === selectedId);
+            meeting.agendas.push({ id: 'a' + Date.now(), text: input.value });
             
-            const meeting = meetings.find(m => m.id === id);
-            if (meeting) {
-                document.getElementById('current-meeting-title').innerText = 'Pautas da Reunião';
-                document.getElementById('current-meeting-subtitle').innerHTML = `<i class="ph ph-clock"></i> Agendado para: ${formatDateTime(meeting.datetime)}`;
-                renderAgendas();
-                document.getElementById('new-agenda-input').focus();
-            }
-        };
-
-        // Adicionar nova Pauta
-        const addAgendaItem = () => {
-            const input = document.getElementById('new-agenda-input');
-            const text = input.value.trim();
-            
-            if (!text || !activeMeetingId) return;
-
-            const meeting = meetings.find(m => m.id === activeMeetingId);
-            if (!meeting.agendas) meeting.agendas = [];
-            
-            meeting.agendas.push({
-                id: 'agenda_' + Date.now().toString(),
-                text: text
-            });
-
-            saveData();
             input.value = '';
+            save();
             renderAgendas();
-            renderMeetings(); // Para atualizar o contador de pautas na sidebar
-        };
+            renderMeetings();
+        }
 
-        // Lidar com o 'Enter' no input de pautas
-        const handleAgendaKeyPress = (event) => {
-            if (event.key === 'Enter') {
-                addAgendaItem();
-            }
-        };
+        function deleteMeeting(e, id) {
+            e.stopPropagation();
+            meetings = meetings.filter(m => m.id !== id);
+            if (selectedId === id) goBack();
+            save();
+            renderMeetings();
+        }
 
-        // Excluir Pauta
-        const deleteAgenda = (agendaId) => {
-            const meeting = meetings.find(m => m.id === activeMeetingId);
-            meeting.agendas = meeting.agendas.filter(a => a.id !== agendaId);
-            saveData();
+        function deleteAgenda(aid) {
+            const meeting = meetings.find(m => m.id === selectedId);
+            meeting.agendas = meeting.agendas.filter(a => a.id !== aid);
+            save();
             renderAgendas();
-            renderMeetings(); // Para atualizar o contador
-        };
+            renderMeetings();
+        }
 
-        // Alternar visibilidade do painel principal
-        const updateMainPanelVisibility = () => {
-            if (activeMeetingId) {
-                document.getElementById('empty-state').style.display = 'none';
-                document.getElementById('agenda-section').style.display = 'flex';
-            } else {
-                document.getElementById('empty-state').style.display = 'flex';
-                document.getElementById('agenda-section').style.display = 'none';
-            }
-        };
+        function goBack() {
+            document.body.classList.remove('view-detail');
+            selectedId = null;
+            renderMeetings();
+        }
 
-        // Inicialização
+        function checkEnter(e) { if (e.key === 'Enter') addAgenda(); }
+
+        function save() { localStorage.setItem('aec_data_v2', JSON.stringify(meetings)); }
+
+        // Init
         renderMeetings();
-        updateMainPanelVisibility();
     </script>
 </body>
 </html>
