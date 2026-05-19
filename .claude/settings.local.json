@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rtk ls *)",
+      "Bash(rtk read *)",
+      "Bash(cp D:/Downloads/aec1/Logo-horizontal-logo-casa-e-texto-horizontal.png e:/Documentos/dev/git/StudioAEC/frontend/public/images/brand/logo-horizontal.png)",
+      "Bash(cp D:/Downloads/aec1/ICONE-casa.png e:/Documentos/dev/git/StudioAEC/frontend/public/images/brand/icon-house.png)",
+      "Bash(cp D:/Downloads/aec1/Autodesk_Revit_professional_NV-300x300.png e:/Documentos/dev/git/StudioAEC/frontend/public/images/brand/revit-pro.png)",
+      "Bash(cp D:/Downloads/aec1/Autodesk_ACI_Standard-300x300.png e:/Documentos/dev/git/StudioAEC/frontend/public/images/brand/aci-standard.png)",
+      "Bash(cp D:/Downloads/aec1/Enscape-white-2.png e:/Documentos/dev/git/StudioAEC/frontend/public/images/brand/enscape.png)",
+      "Bash(rtk npm *)",
+      "Bash(docker compose *)",
+      "Bash(rtk curl *)",
+      "Bash(rtk docker *)"
+    ]
+  }
+}
