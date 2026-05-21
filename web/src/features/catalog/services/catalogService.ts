@@ -72,10 +72,12 @@ function buildSeedCourses(): CourseDto[] {
   for (let i = 0; i < 24; i++) {
     const track = trackIds[i % trackIds.length];
     const trackLabel = track.charAt(0).toUpperCase() + track.slice(1);
+    const moduleNum = (i % 4) + 1;
     courses.push({
       id: `course-${i + 1}`,
       trackId: track,
-      title: `Revit ${trackLabel} — Módulo ${(i % 4) + 1}`,
+      slug: `modulo-${moduleNum}`,
+      title: `Revit ${trackLabel} — Módulo ${moduleNum}`,
       summary:
         'Aprenda fluxos BIM com templates, famílias e documentação executiva alinhada ao mercado.',
       level: levels[i % 3],
@@ -83,6 +85,9 @@ function buildSeedCourses(): CourseDto[] {
       rating: 4.2 + (i % 8) * 0.1,
       enrolledCount: 120 + i * 17,
       thumbnail: `https://picsum.photos/seed/aec${i}/640/360`,
+      purchasable: moduleNum === 1,
+      priceCents: moduleNum === 1 ? 19900 : null,
+      currency: 'brl',
     });
   }
 
@@ -137,7 +142,7 @@ export async function getCourses(trackId?: string): Promise<CourseDto[]> {
         published: true,
         ...(trackId ? { trackId } : {}),
       },
-      orderBy: { createdAt: 'asc' },
+      orderBy: { slug: 'asc' },
     });
     if (rows.length === 0) {
       return trackId
@@ -147,6 +152,7 @@ export async function getCourses(trackId?: string): Promise<CourseDto[]> {
     return rows.map((c) => ({
       id: c.id,
       trackId: c.trackId,
+      slug: c.slug,
       title: c.title,
       summary: c.summary,
       level: c.level,
@@ -154,6 +160,9 @@ export async function getCourses(trackId?: string): Promise<CourseDto[]> {
       rating: c.rating,
       enrolledCount: c.enrolledCount,
       thumbnail: c.thumbnailUrl ?? '',
+      purchasable: c.purchasable,
+      priceCents: c.priceCents,
+      currency: c.currency,
     }));
   } catch {
     return trackId

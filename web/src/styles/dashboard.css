@@ -1,0 +1,220 @@
+/* Área do aluno — matrículas e progresso */
+
+.dashboard__success {
+  margin-block-end: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  border-left: 2px solid var(--oxide-600);
+  background: color-mix(in srgb, var(--oxide-500) 12%, var(--paper-50));
+  font-size: var(--fs-300);
+  color: var(--ink-800);
+}
+
+.dashboard__alert {
+  margin-block-end: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  border-left: 2px solid var(--oxide-600);
+  background: var(--oxide-50);
+  font-size: var(--fs-300);
+  color: var(--ink-800);
+}
+
+.dashboard__hint {
+  margin-block: var(--space-4) var(--space-8);
+  padding: var(--space-4) var(--space-5);
+  background: var(--paper-100);
+  border: 1px solid var(--rule-strong);
+  font-family: var(--font-mono);
+  font-size: var(--fs-200);
+  color: var(--ink-700);
+  line-height: 1.6;
+}
+
+.dashboard__hint code {
+  font-size: 0.9em;
+  color: var(--oxide-600);
+}
+
+.dashboard__admin-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-block: var(--space-6) var(--space-10);
+  flex-wrap: wrap;
+}
+
+.dashboard__badge {
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.65rem;
+  background: var(--ink-900);
+  color: var(--paper-50);
+}
+
+.dashboard__panel {
+  margin-block: var(--space-12) var(--space-10);
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+}
+
+.dashboard__panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-8);
+  border-block-end: 1px solid var(--rule);
+  flex-wrap: wrap;
+}
+
+.dashboard__panel-head h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-600);
+  font-weight: 500;
+}
+
+.dashboard__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-600);
+}
+
+.dashboard__empty {
+  padding: var(--space-12) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.dashboard__empty p {
+  color: var(--ink-700);
+  max-width: 42ch;
+}
+
+.dashboard__enrollment-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard__enrollment-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(12rem, 16rem);
+  gap: var(--space-8);
+  padding: var(--space-6) var(--space-8);
+  border-block-end: 1px solid var(--rule);
+  align-items: start;
+}
+
+.dashboard__enrollment-card:last-child {
+  border-block-end: none;
+}
+
+.dashboard__track {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--oxide-600);
+  margin-block-end: var(--space-2);
+}
+
+.dashboard__enrollment-meta h3 {
+  font-size: var(--fs-500);
+  font-weight: 500;
+  margin-block-end: var(--space-2);
+  text-wrap: balance;
+}
+
+.dashboard__enrollment-meta p {
+  font-size: var(--fs-300);
+  color: var(--ink-600);
+}
+
+.dashboard__enrollment-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.dashboard__progress-bar {
+  height: 4px;
+  background: var(--paper-200);
+  overflow: hidden;
+}
+
+.dashboard__progress-bar span {
+  display: block;
+  height: 100%;
+  background: var(--ink-900);
+  transition: width var(--dur-med) var(--ease-out);
+}
+
+.dashboard__progress-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-600);
+}
+
+.dashboard__cta {
+  margin-block-start: var(--space-8);
+}
+
+.dashboard__tutor-form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.dashboard__tutor-field {
+  display: grid;
+  gap: var(--space-2);
+  font-size: var(--fs-300);
+}
+
+.dashboard__tutor-field select,
+.dashboard__tutor-field textarea {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--rule);
+  background: var(--paper-50);
+  font: inherit;
+}
+
+.dashboard__tutor-error {
+  margin-block-start: var(--space-3);
+  color: var(--oxide-700);
+  font-size: var(--fs-300);
+}
+
+.dashboard__tutor-answer {
+  margin-block-start: var(--space-5);
+  padding: var(--space-4);
+  background: var(--paper-100);
+  border-inline-start: 2px solid var(--oxide-500);
+}
+
+.dashboard__tutor-answer p {
+  margin-block-start: var(--space-2);
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .dashboard__enrollment-card {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .dashboard__panel-head,
+  .dashboard__enrollment-card,
+  .dashboard__empty {
+    padding-inline: var(--gutter);
+  }
+}

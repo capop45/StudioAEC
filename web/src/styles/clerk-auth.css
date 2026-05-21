@@ -1,0 +1,78 @@
+/* Estúdio AEC — overrides dos componentes de autenticação (sem branding externo) */
+
+.clerk-auth-root {
+  width: 100%;
+  max-width: 420px;
+}
+
+.clerk-auth-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  gap: var(--space-6) !important;
+}
+
+.clerk-auth-title {
+  font-family: var(--font-display) !important;
+  font-size: var(--fs-700) !important;
+  font-weight: 500 !important;
+  color: var(--ink-900) !important;
+  letter-spacing: -0.02em !important;
+}
+
+.clerk-auth-subtitle {
+  font-size: var(--fs-300) !important;
+  color: var(--ink-600) !important;
+}
+
+/* Oculta rodapé "Secured by…", dev mode e badges do provedor */
+.clerk-auth-footer-hidden,
+.clerk-auth-root .cl-footer,
+.clerk-auth-root .cl-footerAction,
+.clerk-auth-root .cl-internal-b3fm6y,
+.clerk-auth-root [class*='cl-powered'],
+.clerk-auth-root [class*='cl-badge'] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+.clerk-auth-root .cl-formFieldInput {
+  border-radius: 0 !important;
+  border-color: var(--paper-300) !important;
+}
+
+.clerk-auth-root .cl-formButtonPrimary {
+  border-radius: 0 !important;
+  font-family: var(--font-sans) !important;
+  text-transform: none !important;
+  letter-spacing: 0.02em !important;
+}
+
+.clerk-auth-root .cl-dividerLine {
+  background: var(--paper-200) !important;
+}
+
+.clerk-auth-root .cl-dividerText {
+  color: var(--ink-500) !important;
+  font-family: var(--font-mono) !important;
+  font-size: var(--fs-200) !important;
+}
+
+.clerk-auth-root .cl-footerActionLink,
+.clerk-auth-root .cl-formFieldAction {
+  color: var(--oxide-600) !important;
+}
+
+.clerk-auth-root .cl-footerActionLink:hover,
+.clerk-auth-root .cl-formFieldAction:hover {
+  color: var(--oxide-700) !important;
+}
+
+/* UserButton — menu em PT, sem branding */
+.cl-userButtonPopoverCard {
+  border-radius: 0 !important;
+  border: 1px solid var(--paper-200) !important;
+}

@@ -1,13 +1,8 @@
 import type { Metadata } from 'next';
-import {
-  ClerkProvider,
-  Show,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from '@clerk/nextjs';
+import { ClerkProvider } from '@clerk/nextjs';
 import { IBM_Plex_Mono, IBM_Plex_Sans, Fraunces } from 'next/font/google';
-import { SiteShell } from '@/components/SiteShell';
+import { ConditionalSiteShell } from '@/components/ConditionalSiteShell';
+import { clerkAppearance, clerkLocalization } from '@/lib/clerk-config';
 import './globals.css';
 
 const fraunces = Fraunces({
@@ -45,28 +40,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${fraunces.variable} ${ibmSans.variable} ${ibmMono.variable}`}>
       <body>
-        <ClerkProvider>
+        <ClerkProvider localization={clerkLocalization} appearance={clerkAppearance}>
           <a href="#main-content" className="skip-link">
             Ir para o conteúdo
           </a>
-          <header className="clerk-bar">
-            <Show when="signed-out">
-              <SignInButton mode="modal">
-                <button type="button" className="btn btn-ghost btn-sm">
-                  Entrar
-                </button>
-              </SignInButton>
-              <SignUpButton mode="modal">
-                <button type="button" className="btn btn-primary btn-sm">
-                  Cadastrar
-                </button>
-              </SignUpButton>
-            </Show>
-            <Show when="signed-in">
-              <UserButton />
-            </Show>
-          </header>
-          <SiteShell>{children}</SiteShell>
+          <ConditionalSiteShell>{children}</ConditionalSiteShell>
         </ClerkProvider>
       </body>
     </html>

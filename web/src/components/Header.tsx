@@ -3,21 +3,28 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useAuth, useUser } from '@clerk/nextjs';
+import { Show, UserButton, useClerk, useUser } from '@clerk/nextjs';
 import { PRIMARY_NAV } from '@/content/site';
 import { Logo } from '@/components/Logo';
 import { Icon } from '@/components/Icon';
+import { resolveIsAdmin } from '@/lib/roles';
 
 export function Header() {
   const pathname = usePathname();
-  const { isSignedIn, signOut } = useAuth();
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
+  const { signOut } = useClerk();
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const isAdmin =
-    user?.publicMetadata?.role === 'admin' ||
-    user?.primaryEmailAddress?.emailAddress?.toLowerCase().includes('admin');
+    isLoaded &&
+    user &&
+    resolveIsAdmin({
+      clerkUserId: user.id,
+      username: user.username,
+      publicRole: user.publicMetadata?.role as string | undefined,
+      email: user.primaryEmailAddress?.emailAddress,
+    });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -62,27 +69,38 @@ export function Header() {
           </nav>
 
           <div className="header-actions">
-            {isSignedIn && user?.fullName && (
-              <span className="user-chip">
-                <span className="user-chip__dot" />
-                {user.fullName}
-              </span>
-            )}
-            {isAdmin && (
-              <Link href="/admin/planejamento" className="btn btn-ghost btn-sm">
-                Planejamento
+            <Show when="signed-in">
+              {user?.fullName && (
+                <span className="user-chip" title={user.fullName}>
+                  <span className="user-chip__dot" />
+                  <span className="user-chip__name">{user.fullName}</span>
+                </span>
+              )}
+              {isAdmin && (
+                <Link href="/admin/planejamento" className="btn btn-ghost btn-sm">
+                  Planejamento
+                </Link>
+              )}
+              <Link href="/dashboard" className="btn btn-ghost btn-sm">
+                Minha área
               </Link>
-            )}
-            {isSignedIn ? (
-              <button type="button" className="btn btn-ghost btn-sm" onClick={() => signOut()}>
-                Sair
-              </button>
-            ) : (
-              <Link href="/sign-in" className="btn btn-primary btn-sm">
-                Área do aluno
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: 'header-user-button__avatar',
+                  },
+                }}
+              />
+            </Show>
+            <Show when="signed-out">
+              <Link href="/sign-in" className="btn btn-ghost btn-sm">
+                Entrar
+              </Link>
+              <Link href="/sign-up" className="btn btn-primary btn-sm">
+                Cadastrar
                 <Icon name="arrow-right" size={14} />
               </Link>
-            )}
+            </Show>
 
             <button
               type="button"
@@ -116,20 +134,27 @@ export function Header() {
           );
         })}
         <div className="mobile-drawer__actions">
-          {isSignedIn ? (
-            <button type="button" className="btn btn-primary" onClick={() => signOut()}>
+          <Show when="signed-in">
+            <Link href="/dashboard" className="btn btn-primary">
+              Minha área
+            </Link>
+            {isAdmin && (
+              <Link href="/admin/planejamento" className="btn btn-ghost">
+                Planejamento
+              </Link>
+            )}
+            <button type="button" className="btn btn-ghost" onClick={() => signOut({ redirectUrl: '/' })}>
               Sair
             </button>
-          ) : (
-            <Link href="/sign-in" className="btn btn-primary">
-              Área do aluno
+          </Show>
+          <Show when="signed-out">
+            <Link href="/sign-in" className="btn btn-ghost">
+              Entrar
             </Link>
-          )}
-          {isAdmin && (
-            <Link href="/admin/planejamento" className="btn btn-ghost">
-              Planejamento
+            <Link href="/sign-up" className="btn btn-primary">
+              Cadastrar
             </Link>
-          )}
+          </Show>
         </div>
       </div>
     </>

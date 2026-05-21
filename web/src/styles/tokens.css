@@ -118,6 +118,7 @@
 
   /* ─── LAYOUT ──────────────────────────────────────────────────────────── */
   --header-h:      72px;
+  --top-bar-h:     2.25rem;
   --content-max:   1280px;
   --content-narrow: 760px;
   --gutter:        clamp(1.25rem, 4vw, 4rem);

@@ -54,7 +54,7 @@ export function Footer() {
                 {col.items.map((it) => {
                   const href = it.href === '/login' ? '/sign-in' : it.href;
                   return (
-                    <li key={href}>
+                    <li key={`${col.title}-${it.label}-${href}`}>
                       <Link href={href}>{it.label}</Link>
                     </li>
                   );

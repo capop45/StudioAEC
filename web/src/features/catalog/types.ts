@@ -12,6 +12,7 @@ export interface CourseTrackDto {
 export interface CourseDto {
   id: string;
   trackId: string;
+  slug: string;
   title: string;
   summary: string;
   level: string;
@@ -19,4 +20,20 @@ export interface CourseDto {
   rating: number;
   enrolledCount: number;
   thumbnail: string;
+  purchasable: boolean;
+  priceCents: number | null;
+  currency: string;
+}
+
+export interface EnrollmentSummaryDto {
+  id: string;
+  courseId: string;
+  courseTitle: string;
+  trackSlug: string;
+  trackTitle: string;
+  level: string;
+  durationHours: number;
+  status: 'ACTIVE' | 'COMPLETED' | 'CANCELLED';
+  progressPercent: number;
+  lessonCount: number;
 }

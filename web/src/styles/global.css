@@ -26,6 +26,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  overflow-x: clip;
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga' 1, 'kern' 1, 'tnum' 0;
 }
@@ -167,4 +168,29 @@ em {
 .link-underline:hover {
   background-size: 0% 1px;
   background-position: 100% 100%;
+}
+
+/* Legibilidade em qualquer largura — evita texto cortado ou ilegível */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+label,
+button,
+input,
+textarea,
+select {
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 480px) {
+  .btn {
+    white-space: normal;
+    text-align: center;
+    hyphens: auto;
+  }
 }

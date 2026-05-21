@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { auth } from '@clerk/nextjs/server';
 import { BibliotecasFilter } from '@/features/marketing/components/BibliotecasFilter';
 
 export const metadata: Metadata = {
@@ -6,6 +7,7 @@ export const metadata: Metadata = {
   description: 'Famílias paramétricas Revit, scripts Dynamo e bibliotecas multidisciplinares.',
 };
 
-export default function BibliotecasPage() {
-  return <BibliotecasFilter />;
+export default async function BibliotecasPage() {
+  const { userId } = await auth();
+  return <BibliotecasFilter isSignedIn={Boolean(userId)} />;
 }

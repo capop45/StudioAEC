@@ -1,26 +1,23 @@
 import { SignIn } from '@clerk/nextjs';
+import { AuthShell } from '@/components/auth/AuthShell';
+import { authPaths, clerkAppearance } from '@/lib/clerk-config';
+
+export const metadata = {
+  title: 'Entrar',
+  description: 'Acesse sua conta no Estúdio AEC — trilhas, templates e bibliotecas Revit.',
+};
 
 export default function SignInPage() {
   return (
-    <div className="auth-page auth-page--clerk">
-      <aside className="auth-page__pane" aria-hidden="true">
-        <span className="eyebrow eyebrow--on-dark">
-          <span className="eyebrow__line" />
-          <span className="eyebrow__code">AEC.LG</span> · Área do aluno
-        </span>
-        <div>
-          <h2>
-            Biblioteca completa do <em>Estúdio AEC</em>.
-          </h2>
-          <p>
-            Trilhas, templates, bibliotecas Revit e mentorias mensais ao vivo. Um único hub pensado
-            para profissionais AEC.
-          </p>
-        </div>
-      </aside>
-      <section className="auth-page__form-pane">
-        <SignIn />
-      </section>
-    </div>
+    <AuthShell mode="sign-in">
+      <SignIn
+        path={authPaths.signIn}
+        routing="path"
+        signUpUrl={authPaths.signUp}
+        fallbackRedirectUrl={authPaths.afterAuth}
+        forceRedirectUrl={authPaths.afterAuth}
+        appearance={clerkAppearance}
+      />
+    </AuthShell>
   );
 }

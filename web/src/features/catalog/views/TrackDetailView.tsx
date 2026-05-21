@@ -1,14 +1,23 @@
 import Link from 'next/link';
 import { TrackIcon } from '@/components/TrackIcon';
 import { Icon } from '@/components/Icon';
+import { CoursePurchaseButton } from '@/features/catalog/components/CoursePurchaseButton';
 import type { CourseDto, CourseTrackDto } from '@/features/catalog/types';
 
 interface TrackDetailViewProps {
   track: CourseTrackDto;
   courses: CourseDto[];
+  isSignedIn: boolean;
+  checkoutCancelled?: boolean;
 }
 
-export function TrackDetailView({ track, courses }: TrackDetailViewProps) {
+export function TrackDetailView({
+  track,
+  courses,
+  isSignedIn,
+  checkoutCancelled,
+}: TrackDetailViewProps) {
+  const signInRedirectUrl = `/sign-in?redirect_url=${encodeURIComponent(`/treinamentos/${track.slug}`)}`;
   return (
     <>
       <header className="page-header">
@@ -61,6 +70,11 @@ export function TrackDetailView({ track, courses }: TrackDetailViewProps) {
 
       <section className="section">
         <div className="container">
+          {checkoutCancelled && (
+            <p className="track-detail__checkout-hint" role="status">
+              Pagamento cancelado. Você pode tentar novamente quando quiser.
+            </p>
+          )}
           <div className="section-head">
             <div className="section-head__copy">
               <span className="eyebrow">
@@ -84,7 +98,12 @@ export function TrackDetailView({ track, courses }: TrackDetailViewProps) {
                   </span>
                 </div>
                 <div className="course-card__body">
-                  <span className="badge">{course.level}</span>
+                  <div className="course-card__badges">
+                    <span className="badge">{course.level}</span>
+                    {course.purchasable && course.priceCents != null && (
+                      <span className="badge badge--brand">À venda</span>
+                    )}
+                  </div>
                   <h3>{course.title}</h3>
                   <p className="course-card__summary">{course.summary}</p>
                   <div className="course-card__meta">
@@ -95,6 +114,11 @@ export function TrackDetailView({ track, courses }: TrackDetailViewProps) {
                       <Icon name="star" size={13} /> {course.rating.toFixed(1)}
                     </span>
                   </div>
+                  <CoursePurchaseButton
+                    course={course}
+                    isSignedIn={isSignedIn}
+                    signInRedirectUrl={signInRedirectUrl}
+                  />
                 </div>
               </article>
             ))}

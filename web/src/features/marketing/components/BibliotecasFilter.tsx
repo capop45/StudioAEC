@@ -3,9 +3,14 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Icon } from '@/components/Icon';
+import { LibraryDownloadButton } from '@/features/content/components/LibraryDownloadButton';
 import { LIBRARIES } from '@/content/libraries';
 
-export function BibliotecasFilter() {
+interface BibliotecasFilterProps {
+  isSignedIn: boolean;
+}
+
+export function BibliotecasFilter({ isSignedIn }: BibliotecasFilterProps) {
   const categories = useMemo(
     () => ['Todos', ...Array.from(new Set(LIBRARIES.map((l) => l.category)))],
     [],
@@ -99,9 +104,7 @@ export function BibliotecasFilter() {
                   <p>{lib.description}</p>
                   <div className="asset-card__footer">
                     <span>{lib.itemCount} componentes</span>
-                    <span className="asset-card__action">
-                      <Icon name="download" size={13} /> Baixar
-                    </span>
+                    <LibraryDownloadButton assetId={lib.id} isSignedIn={isSignedIn} />
                   </div>
                 </div>
               </article>
