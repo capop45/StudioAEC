@@ -1,0 +1,24 @@
+# PostgreSQL local com pgvector para desenvolvimento do LMS
+# Uso: docker compose -f docker-compose.db.yml up -d
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: studioaec-db
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: studioaec
+      POSTGRES_PASSWORD: studioaec
+      POSTGRES_DB: studioaec
+    volumes:
+      - studioaec_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U studioaec -d studioaec']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  studioaec_pgdata:

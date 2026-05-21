@@ -1,0 +1,271 @@
+// Estúdio AEC LMS — transactional + AI-ready (pgvector)
+// Enable in Postgres: CREATE EXTENSION IF NOT EXISTS vector;
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Organizations & users (sync with Clerk) ─────────────────────────────
+
+model Organization {
+  id        String   @id @default(cuid())
+  clerkOrgId String? @unique @map("clerk_org_id")
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  users    User[]
+  tracks   Track[]
+  courses  Course[]
+  knowledgeBases AiKnowledgeBase[]
+
+  @@map("organizations")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  clerkUserId  String   @unique @map("clerk_user_id")
+  email        String   @unique
+  name         String?
+  role         UserRole @default(STUDENT)
+  organizationId String? @map("organization_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  enrollments  Enrollment[]
+  lessonProgress LessonProgress[]
+  certificates Certificate[]
+  conversations  AiConversation[]
+
+  @@index([organizationId])
+  @@map("users")
+}
+
+enum UserRole {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+}
+
+// ─── Catalog ─────────────────────────────────────────────────────────────
+
+model Track {
+  id             String   @id @default(cuid())
+  organizationId String?  @map("organization_id")
+  slug           String
+  title          String
+  description    String
+  icon           String   @default("book")
+  color          String   @default("#6366f1")
+  courseCount    Int      @default(0) @map("course_count")
+  totalHours     Int      @default(0) @map("total_hours")
+  sortOrder      Int      @default(0) @map("sort_order")
+  published      Boolean  @default(true)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  courses      Course[]
+
+  @@unique([organizationId, slug])
+  @@map("tracks")
+}
+
+model Course {
+  id             String   @id @default(cuid())
+  organizationId String?  @map("organization_id")
+  trackId        String   @map("track_id")
+  slug           String
+  title          String
+  summary        String
+  level          String
+  durationHours  Int      @map("duration_hours")
+  rating         Float    @default(0)
+  enrolledCount  Int      @default(0) @map("enrolled_count")
+  thumbnailUrl   String?  @map("thumbnail_url")
+  published      Boolean  @default(true)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  track        Track         @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  lessons      Lesson[]
+  enrollments  Enrollment[]
+  knowledgeBases AiKnowledgeBase[]
+
+  @@unique([trackId, slug])
+  @@index([organizationId])
+  @@map("courses")
+}
+
+model Lesson {
+  id          String   @id @default(cuid())
+  courseId    String   @map("course_id")
+  slug        String
+  title       String
+  sortOrder   Int      @default(0) @map("sort_order")
+  videoUrl    String?  @map("video_url")
+  durationMin Int      @default(0) @map("duration_min")
+  transcript  String?  @db.Text
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  course   Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progress LessonProgress[]
+  chunks   AiDocumentChunk[]
+
+  @@unique([courseId, slug])
+  @@map("lessons")
+}
+
+model Enrollment {
+  id         String           @id @default(cuid())
+  userId     String           @map("user_id")
+  courseId   String           @map("course_id")
+  status     EnrollmentStatus @default(ACTIVE)
+  enrolledAt DateTime         @default(now()) @map("enrolled_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([courseId])
+  @@map("enrollments")
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+model LessonProgress {
+  id              String   @id @default(cuid())
+  userId          String   @map("user_id")
+  lessonId        String   @map("lesson_id")
+  progressPercent Int      @default(0) @map("progress_percent")
+  completedAt     DateTime? @map("completed_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@map("lesson_progress")
+}
+
+model Certificate {
+  id           String   @id @default(cuid())
+  userId       String   @map("user_id")
+  courseId     String   @map("course_id")
+  issuedAt     DateTime @default(now()) @map("issued_at")
+  verifyCode   String   @unique @map("verify_code")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("certificates")
+}
+
+// ─── AI / RAG (pgvector column — enable extension in DB) ─────────────────
+
+model AiKnowledgeBase {
+  id             String   @id @default(cuid())
+  organizationId String?  @map("organization_id")
+  courseId       String?  @map("course_id")
+  title          String
+  sourceType     String   @map("source_type")
+  rawContent     String?  @db.Text @map("raw_content")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  course       Course?       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  chunks       AiDocumentChunk[]
+
+  @@index([courseId])
+  @@index([organizationId])
+  @@map("ai_knowledge_bases")
+}
+
+model AiDocumentChunk {
+  id              String   @id @default(cuid())
+  knowledgeBaseId String   @map("knowledge_base_id")
+  lessonId        String?  @map("lesson_id")
+  courseId        String   @map("course_id")
+  organizationId  String?  @map("organization_id")
+  content         String   @db.Text
+  chunkIndex      Int      @map("chunk_index")
+  tokenCount      Int?     @map("token_count")
+  /// Store via raw SQL migration: embedding vector(1536)
+  embeddingJson   String?  @map("embedding_json")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  knowledgeBase AiKnowledgeBase @relation(fields: [knowledgeBaseId], references: [id], onDelete: Cascade)
+  lesson        Lesson?         @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  retrievalLogs AiRetrievalLog[]
+
+  @@index([courseId, organizationId])
+  @@index([knowledgeBaseId])
+  @@map("ai_document_chunks")
+}
+
+model AiPromptTemplate {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  version   Int      @default(1)
+  name      String
+  systemPrompt String @db.Text @map("system_prompt")
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("ai_prompt_templates")
+}
+
+model AiConversation {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  courseId  String?  @map("course_id")
+  title     String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages AiMessage[]
+
+  @@index([userId])
+  @@map("ai_conversations")
+}
+
+model AiMessage {
+  id             String   @id @default(cuid())
+  conversationId String   @map("conversation_id")
+  role           String
+  content        String   @db.Text
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  conversation  AiConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  retrievalLogs AiRetrievalLog[]
+
+  @@map("ai_messages")
+}
+
+model AiRetrievalLog {
+  id        String   @id @default(cuid())
+  messageId String?  @map("message_id")
+  chunkId   String   @map("chunk_id")
+  score     Float?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  message AiMessage?      @relation(fields: [messageId], references: [id], onDelete: SetNull)
+  chunk   AiDocumentChunk @relation(fields: [chunkId], references: [id], onDelete: Cascade)
+
+  @@map("ai_retrieval_logs")
+}

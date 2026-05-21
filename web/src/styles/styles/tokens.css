@@ -1,0 +1,148 @@
+/* Estúdio AEC — Blueprint Editorial design tokens
+   Identidade: prancha técnica + monografia arquitetônica + carimbo de cartório.
+   Paleta: papel cru, tinta noir, óxido (único acento). Ponto único de verdade. */
+
+:root {
+  /* ─── PAPER (base cru/creme — substitui o cinza frio anterior) ───────── */
+  --paper-50:   #faf9f4;   /* paper base, default bg */
+  --paper-100:  #f4f1e7;   /* cream muted (sections) */
+  --paper-200:  #e8e3d2;   /* warm separator */
+  --paper-300:  #d6cfb7;   /* warm rule strong */
+  --paper-edge: #ebe6d3;   /* edge of the sheet */
+
+  /* ─── INK (tinta noir, levemente quente) ──────────────────────────────── */
+  --ink-950:  #0a0a09;     /* extreme noir */
+  --ink-900:  #141413;     /* typewriter ink (default text on paper) */
+  --ink-800:  #1f1e1c;     /* page-header bg */
+  --ink-700:  #3a3835;     /* deep gray */
+  --ink-600:  #5c5953;     /* warm gray */
+  --ink-500:  #807b71;     /* muted text */
+  --ink-400:  #a8a397;     /* subtle text */
+  --ink-300:  #cdc7b6;     /* rule on dark / disabled */
+
+  /* ─── OXIDE (acento único, vermelho de carimbo) ───────────────────────── */
+  --oxide-700: #8e2a14;    /* deepest seal */
+  --oxide-600: #a8351c;    /* primary oxide */
+  --oxide-500: #c44a2e;    /* hover */
+  --oxide-100: #f4dfd5;    /* soft tint */
+  --oxide-50:  #faf0e9;    /* whisper tint */
+
+  /* ─── DRAFTING (uso raríssimo — só para badges técnicos como LOD) ─────── */
+  --draft-700: #122a45;
+  --draft-600: #1d3a5f;
+  --draft-100: #d6dfeb;
+
+  /* ─── SEMANTIC ─────────────────────────────────────────────────────────── */
+  --bg:                var(--paper-50);
+  --bg-muted:          var(--paper-100);
+  --bg-inverse:        var(--ink-900);
+  --surface:           #ffffff;
+  --surface-muted:     var(--paper-100);
+  --surface-inverse:   var(--ink-800);
+  --rule:              var(--paper-200);          /* 1px rule line */
+  --rule-strong:       var(--paper-300);
+  --rule-ink:          var(--ink-900);            /* full ink rule */
+  --rule-inverse:      rgba(244, 241, 231, 0.16);
+  --text:              var(--ink-900);
+  --text-muted:        var(--ink-600);
+  --text-subtle:       var(--ink-500);
+  --text-inverse:      var(--paper-50);
+  --text-inverse-muted:rgba(244, 241, 231, 0.66);
+  --accent:            var(--oxide-600);
+  --accent-hover:      var(--oxide-700);
+  --accent-soft:       var(--oxide-100);
+  --highlight:         var(--oxide-600);
+  --success:           #4d6b3c;
+  --danger:            var(--oxide-600);
+
+  /* ─── TYPOGRAPHY ──────────────────────────────────────────────────────── */
+  --font-display: 'Fraunces', 'Times New Roman', Georgia, serif;
+  --font-sans:    'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Fraunces variable axes — "editorial credibility" preset */
+  --fraunces-editorial: 'opsz' 144, 'SOFT' 30, 'WONK' 0;
+  --fraunces-display:   'opsz' 144, 'SOFT' 10, 'WONK' 0;
+  --fraunces-body:      'opsz' 32,  'SOFT' 50, 'WONK' 0;
+
+  --fs-100: 0.75rem;     /* 12 — captions, plate codes */
+  --fs-200: 0.8125rem;   /* 13 — small UI, mono labels */
+  --fs-300: 0.9375rem;   /* 15 — secondary body */
+  --fs-400: 1.0625rem;   /* 17 — primary body (editorial size) */
+  --fs-500: 1.1875rem;   /* 19 — lead */
+  --fs-600: 1.5rem;      /* 24 — h4 */
+  --fs-700: 1.875rem;    /* 30 — h3 */
+  --fs-800: 2.375rem;    /* 38 — h2 */
+  --fs-900: clamp(2.5rem, 5vw, 4rem);          /* section display */
+  --fs-display: clamp(3.5rem, 10vw, 7.5rem);   /* hero / monograph */
+
+  /* ─── SPACING (4-base, com mais respiração editorial) ─────────────────── */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-40: 10rem;
+
+  /* ─── RADIUS — quase zero (estética de prancha) ───────────────────────── */
+  --radius-xs:   1px;
+  --radius-sm:   2px;
+  --radius-md:   2px;
+  --radius-lg:   3px;
+  --radius-xl:   4px;
+  --radius-pill: 999px;     /* mantido pra um único uso opcional */
+
+  /* ─── ELEVATION — sombras quase imperceptíveis, mais ink line ─────────── */
+  --shadow-1: 0 1px 0 var(--paper-200);
+  --shadow-2: 0 1px 0 var(--paper-300);
+  --shadow-3: 0 12px 32px -16px rgba(20, 20, 19, 0.18);
+  --shadow-4: 0 24px 56px -20px rgba(20, 20, 19, 0.28);
+  --shadow-inverse: 0 24px 60px -24px rgba(0, 0, 0, 0.65);
+  --ring: 0 0 0 2px var(--ink-900);
+  --ring-oxide: 0 0 0 2px var(--oxide-600);
+
+  /* ─── MOTION — arquitetural, sem bounce ───────────────────────────────── */
+  --ease-out:    cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-med:  280ms;
+  --dur-slow: 520ms;
+
+  /* ─── LAYOUT ──────────────────────────────────────────────────────────── */
+  --header-h:      72px;
+  --content-max:   1280px;
+  --content-narrow: 760px;
+  --gutter:        clamp(1.25rem, 4vw, 4rem);
+
+  /* ─── BRAND CODES — usados em pseudo-elementos pelas pages ────────────── */
+  --hatch-ink:    repeating-linear-gradient(
+                    45deg,
+                    transparent 0 11px,
+                    rgba(20, 20, 19, 0.06) 11px 12px
+                  );
+  --hatch-paper:  repeating-linear-gradient(
+                    45deg,
+                    transparent 0 11px,
+                    rgba(244, 241, 231, 0.06) 11px 12px
+                  );
+  --hatch-oxide:  repeating-linear-gradient(
+                    45deg,
+                    transparent 0 9px,
+                    rgba(168, 53, 28, 0.18) 9px 10px
+                  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
