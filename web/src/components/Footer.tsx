@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink } from '@/components/AppLink';
 import { BRAND, FOOTER_COLUMNS } from '@/content/site';
 import { Icon } from '@/components/Icon';
 
@@ -55,7 +55,7 @@ export function Footer() {
                   const href = it.href === '/login' ? '/sign-in' : it.href;
                   return (
                     <li key={`${col.title}-${it.label}-${href}`}>
-                      <Link href={href}>{it.label}</Link>
+                      <AppLink href={href}>{it.label}</AppLink>
                     </li>
                   );
                 })}

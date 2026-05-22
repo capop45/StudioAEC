@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink } from '@/components/AppLink';
 import { Icon } from '@/components/Icon';
 import { CourseTutorPanel } from '@/features/catalog/components/CourseTutorPanel';
 import type { EnrollmentSummaryDto } from '@/features/catalog/types';
@@ -57,10 +57,10 @@ export function DashboardView({
       {isAdmin && (
         <div className="dashboard__admin-strip">
           <span className="dashboard__badge">Admin</span>
-          <Link href="/admin/planejamento" className="btn btn-primary btn-sm">
+          <AppLink href="/admin/planejamento" className="btn btn-primary btn-sm">
             Planejamento
             <Icon name="arrow-right" size={14} />
-          </Link>
+          </AppLink>
         </div>
       )}
 
@@ -73,9 +73,9 @@ export function DashboardView({
         {enrollments.length === 0 ? (
           <div className="dashboard__empty">
             <p>Você ainda não está matriculado em nenhum curso.</p>
-            <Link href="/treinamentos" className="btn btn-primary">
+            <AppLink href="/treinamentos" className="btn btn-primary">
               Explorar trilhas
-            </Link>
+            </AppLink>
           </div>
         ) : (
           <ul className="dashboard__enrollment-list">
@@ -94,12 +94,12 @@ export function DashboardView({
                     <span style={{ width: `${item.progressPercent}%` }} />
                   </div>
                   <span className="dashboard__progress-label">{item.progressPercent}% concluído</span>
-                  <Link
+                  <AppLink
                     href={`/treinamentos/${item.trackSlug}`}
                     className="btn btn-ghost btn-sm"
                   >
                     Continuar trilha
-                  </Link>
+                  </AppLink>
                 </div>
               </li>
             ))}
@@ -110,12 +110,12 @@ export function DashboardView({
       <CourseTutorPanel enrollments={enrollments} />
 
       <div className="hero__cta dashboard__cta">
-        <Link href="/treinamentos" className="btn btn-primary btn-lg">
+        <AppLink href="/treinamentos" className="btn btn-primary btn-lg">
           Ver treinamentos
-        </Link>
-        <Link href="/templates" className="btn btn-ghost btn-lg">
+        </AppLink>
+        <AppLink href="/templates" className="btn btn-ghost btn-lg">
           Templates Revit
-        </Link>
+        </AppLink>
       </div>
     </div>
   );

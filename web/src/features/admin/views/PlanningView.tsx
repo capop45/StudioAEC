@@ -7,9 +7,10 @@ import type {
   PlanningTaskDto,
   WorkloadEntryDto,
 } from '@/features/admin/services/planningService';
+import { MarketingPanel } from '@/features/marketing/views/MarketingPanel';
 import '@/styles/planning.css';
 
-type ViewMode = 'list' | 'gantt' | 'workload';
+type ViewMode = 'list' | 'gantt' | 'workload' | 'marketing';
 
 function parseDate(s: string) {
   return new Date(`${s}T12:00:00`);
@@ -60,7 +61,7 @@ export function PlanningView({ lists, tasks, workload, gantt }: PlanningViewProp
       <div className="planning-topbar">
         <h1>AEC.AD · Planejamento</h1>
         <div className="view-tabs" role="tablist">
-          {(['list', 'gantt', 'workload'] as const).map((v) => (
+          {(['list', 'gantt', 'workload', 'marketing'] as const).map((v) => (
             <button
               key={v}
               type="button"
@@ -69,7 +70,13 @@ export function PlanningView({ lists, tasks, workload, gantt }: PlanningViewProp
               className={view === v ? 'active' : ''}
               onClick={() => setView(v)}
             >
-              {v === 'list' ? 'Lista' : v === 'gantt' ? 'Gantt' : 'Workload'}
+              {v === 'list'
+                ? 'Lista'
+                : v === 'gantt'
+                  ? 'Gantt'
+                  : v === 'workload'
+                    ? 'Workload'
+                    : 'Marketing'}
             </button>
           ))}
         </div>
@@ -144,6 +151,8 @@ export function PlanningView({ lists, tasks, workload, gantt }: PlanningViewProp
             })}
           </div>
         )}
+
+        {view === 'marketing' && <MarketingPanel />}
 
         {view === 'workload' && (
           <div className="workload-grid">

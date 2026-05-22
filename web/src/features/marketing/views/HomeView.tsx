@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink } from '@/components/AppLink';
 import Image from 'next/image';
 import { TrackIcon } from '@/components/TrackIcon';
 import { Icon } from '@/components/Icon';
@@ -51,12 +51,12 @@ export function HomeView({ tracks, courses }: HomeViewProps) {
                 &quot;as-built&quot;, no padrão de mercado brasileiro.
               </p>
               <div className="hero__cta">
-                <Link href="/treinamentos" className="btn btn-primary btn-lg">
+                <AppLink href="/treinamentos" className="btn btn-primary btn-lg">
                   Explorar trilhas <Icon name="arrow-right" size={14} />
-                </Link>
-                <Link href="/templates" className="btn btn-on-dark btn-lg">
+                </AppLink>
+                <AppLink href="/templates" className="btn btn-on-dark btn-lg">
                   Templates &amp; bibliotecas
-                </Link>
+                </AppLink>
               </div>
 
               <div className="hero__trust" role="list">
@@ -178,7 +178,7 @@ export function HomeView({ tracks, courses }: HomeViewProps) {
 
           <div className="tracks-grid">
             {tracks.map((track, idx) => (
-              <Link
+              <AppLink
                 key={track.id}
                 href={`/treinamentos/${track.slug}`}
                 className="track-card"
@@ -200,7 +200,7 @@ export function HomeView({ tracks, courses }: HomeViewProps) {
                     conteúdo
                   </span>
                 </div>
-              </Link>
+              </AppLink>
             ))}
           </div>
         </div>
@@ -220,9 +220,9 @@ export function HomeView({ tracks, courses }: HomeViewProps) {
               </p>
             </div>
             <div className="section-head__aside">
-              <Link href="/treinamentos" className="link-underline">
+              <AppLink href="/treinamentos" className="link-underline">
                 Ver todos →
-              </Link>
+              </AppLink>
             </div>
           </div>
 
@@ -305,12 +305,12 @@ export function HomeView({ tracks, courses }: HomeViewProps) {
               </p>
             </div>
             <div className="cta-strip__actions">
-              <Link href="/treinamentos" className="btn btn-accent btn-lg">
+              <AppLink href="/treinamentos" className="btn btn-accent btn-lg">
                 Ver treinamentos <Icon name="arrow-right" size={14} />
-              </Link>
-              <Link href="/contato" className="btn btn-on-dark btn-lg">
+              </AppLink>
+              <AppLink href="/contato" className="btn btn-on-dark btn-lg">
                 Falar com o studio
-              </Link>
+              </AppLink>
             </div>
           </div>
         </div>

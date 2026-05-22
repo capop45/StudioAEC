@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { AppLink } from '@/components/AppLink';
 import { usePathname } from 'next/navigation';
 import { Show, UserButton, useClerk, useUser } from '@clerk/nextjs';
 import { PRIMARY_NAV } from '@/content/site';
@@ -57,13 +57,13 @@ export function Header() {
                   ? pathname === '/'
                   : pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
-                <Link
+                <AppLink
                   key={item.href}
                   href={item.href}
                   className={active ? 'active' : undefined}
                 >
                   {item.label}
-                </Link>
+                </AppLink>
               );
             })}
           </nav>
@@ -77,13 +77,13 @@ export function Header() {
                 </span>
               )}
               {isAdmin && (
-                <Link href="/admin/planejamento" className="btn btn-ghost btn-sm">
+                <AppLink href="/admin/planejamento" className="btn btn-ghost btn-sm">
                   Planejamento
-                </Link>
+                </AppLink>
               )}
-              <Link href="/dashboard" className="btn btn-ghost btn-sm">
+              <AppLink href="/dashboard" className="btn btn-ghost btn-sm">
                 Minha área
-              </Link>
+              </AppLink>
               <UserButton
                 appearance={{
                   elements: {
@@ -93,13 +93,13 @@ export function Header() {
               />
             </Show>
             <Show when="signed-out">
-              <Link href="/sign-in" className="btn btn-ghost btn-sm">
+              <AppLink href="/sign-in" className="btn btn-ghost btn-sm">
                 Entrar
-              </Link>
-              <Link href="/sign-up" className="btn btn-primary btn-sm">
+              </AppLink>
+              <AppLink href="/sign-up" className="btn btn-primary btn-sm">
                 Cadastrar
                 <Icon name="arrow-right" size={14} />
-              </Link>
+              </AppLink>
             </Show>
 
             <button
@@ -128,32 +128,32 @@ export function Header() {
               ? pathname === '/'
               : pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
-            <Link key={item.href} href={item.href} className={active ? 'active' : undefined}>
+            <AppLink key={item.href} href={item.href} className={active ? 'active' : undefined}>
               {item.label}
-            </Link>
+            </AppLink>
           );
         })}
         <div className="mobile-drawer__actions">
           <Show when="signed-in">
-            <Link href="/dashboard" className="btn btn-primary">
+            <AppLink href="/dashboard" className="btn btn-primary">
               Minha área
-            </Link>
+            </AppLink>
             {isAdmin && (
-              <Link href="/admin/planejamento" className="btn btn-ghost">
+              <AppLink href="/admin/planejamento" className="btn btn-ghost">
                 Planejamento
-              </Link>
+              </AppLink>
             )}
             <button type="button" className="btn btn-ghost" onClick={() => signOut({ redirectUrl: '/' })}>
               Sair
             </button>
           </Show>
           <Show when="signed-out">
-            <Link href="/sign-in" className="btn btn-ghost">
+            <AppLink href="/sign-in" className="btn btn-ghost">
               Entrar
-            </Link>
-            <Link href="/sign-up" className="btn btn-primary">
+            </AppLink>
+            <AppLink href="/sign-up" className="btn btn-primary">
               Cadastrar
-            </Link>
+            </AppLink>
           </Show>
         </div>
       </div>

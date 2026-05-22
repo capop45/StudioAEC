@@ -51,8 +51,8 @@ export const FOOTER_COLUMNS: { title: string; items: NavItem[] }[] = [
   {
     title: 'Suporte',
     items: [
-      { label: 'Política de privacidade', href: '/contato' },
-      { label: 'Termos de uso', href: '/contato' },
+      { label: 'Política de privacidade', href: '/privacidade' },
+      { label: 'Termos de uso', href: '/termos' },
       { label: 'FAQ', href: '/orientacoes' }
     ]
   }

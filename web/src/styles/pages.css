@@ -75,7 +75,7 @@
 
 .hero__layout {
   display: grid;
-  grid-template-columns: 1.4fr 0.85fr;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.85fr);
   gap: var(--space-16);
   align-items: end;
 }
@@ -706,13 +706,14 @@
   color: var(--text-inverse);
   padding: clamp(var(--space-12), 7vw, var(--space-20));
   display: grid;
-  grid-template-columns: 1.4fr auto;
+  grid-template-columns: minmax(0, 1.4fr) auto;
   gap: var(--space-12);
   align-items: end;
   position: relative;
   overflow: hidden;
   isolation: isolate;
   border: 1px solid var(--rule-inverse);
+  min-width: 0;
 }
 
 .cta-strip::before {
@@ -770,7 +771,16 @@
 }
 
 @media (max-width: 800px) {
-  .cta-strip { grid-template-columns: 1fr; align-items: start; }
+  .cta-strip {
+    grid-template-columns: 1fr;
+    align-items: start;
+    padding-block-start: var(--space-16);
+  }
+
+  .cta-strip::after {
+    inset-inline-end: var(--gutter);
+  }
+
   .cta-strip__actions { flex-direction: row; flex-wrap: wrap; }
 }
 
@@ -1213,8 +1223,9 @@
 .timeline {
   margin-block-start: var(--space-10);
   position: relative;
-  padding-inline-start: var(--space-8);
+  padding-inline-start: var(--space-10);
   border-inline-start: 1px solid var(--rule);
+  overflow-x: clip;
 }
 
 .timeline__item {
@@ -1225,7 +1236,7 @@
 .timeline__item::before {
   content: '';
   position: absolute;
-  inset-inline-start: calc(var(--space-8) * -1 - 5px);
+  inset-inline-start: calc(var(--space-10) * -1 - 4px);
   inset-block-start: 0.5rem;
   width: 9px;
   height: 9px;
@@ -1320,7 +1331,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 .contact-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: var(--space-16);
 }
 

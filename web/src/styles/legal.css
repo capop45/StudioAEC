@@ -1,0 +1,211 @@
+/* Documentos legais — mesma linguagem de prancha, tipografia contida */
+
+.legal-doc__toc {
+  margin-block-end: var(--space-12);
+  padding: var(--space-5) var(--space-6);
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.legal-doc__toc-label {
+  display: block;
+  margin-block-end: var(--space-3);
+  color: var(--text-muted);
+}
+
+.legal-doc__toc ol {
+  list-style: none;
+  counter-reset: legal-toc;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.legal-doc__toc li {
+  counter-increment: legal-toc;
+}
+
+.legal-doc__toc li a {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--fs-200);
+  color: var(--text-muted);
+  transition: color var(--dur-med);
+}
+
+.legal-doc__toc li a::before {
+  content: counter(legal-toc, decimal-leading-zero) ' · ';
+  font-variant-numeric: tabular-nums;
+  color: var(--text-subtle);
+}
+
+.legal-doc__toc li a:hover {
+  color: var(--text);
+}
+
+.legal-doc {
+  font-size: var(--fs-300);
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.legal-doc__intro {
+  margin-block-end: var(--space-16);
+  padding-block-end: var(--space-10);
+  border-block-end: 1px solid var(--rule);
+}
+
+.legal-doc__intro p + p {
+  margin-block-start: var(--space-4);
+}
+
+.legal-doc__section {
+  margin-block-end: var(--space-14);
+  scroll-margin-top: calc(var(--header-h, 4.5rem) + var(--space-6));
+}
+
+.legal-doc__section-head {
+  margin-block-end: var(--space-5);
+  padding-block-end: var(--space-4);
+  border-block-end: 1px solid var(--rule);
+}
+
+.legal-doc__section-code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-block-end: var(--space-2);
+}
+
+.legal-doc__section h2 {
+  font-size: var(--fs-600);
+  font-variation-settings: var(--fraunces-body);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.legal-doc__section p + p,
+.legal-doc__section p + ul,
+.legal-doc__section ul + p {
+  margin-block-start: var(--space-4);
+}
+
+.legal-doc__section ul {
+  padding-inline-start: var(--space-6);
+  list-style: none;
+}
+
+.legal-doc__section ul li {
+  position: relative;
+  padding-inline-start: var(--space-4);
+  color: var(--text-muted);
+}
+
+.legal-doc__section ul li::before {
+  content: '—';
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+}
+
+.legal-doc__section ul li + li {
+  margin-block-start: var(--space-3);
+}
+
+.legal-doc__subsection {
+  margin-block-start: var(--space-8);
+  padding-inline-start: var(--space-4);
+  border-inline-start: 1px solid var(--rule);
+}
+
+.legal-doc__subsection h3 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-300);
+  font-weight: 600;
+  margin-block-end: var(--space-3);
+  color: var(--text);
+}
+
+/* Aviso de cookies — cartouche discreto, canto inferior */
+.cookie-notice {
+  position: fixed;
+  z-index: 35;
+  inset-block-end: var(--space-4);
+  inset-inline-start: var(--space-4);
+  max-width: min(20rem, calc(100% - var(--gutter) * 2));
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--paper-50) 92%, transparent);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 0 var(--paper-edge);
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  color: var(--text-subtle);
+  pointer-events: auto;
+}
+
+.cookie-notice__text {
+  flex: 1;
+  margin: 0;
+}
+
+.cookie-notice__link {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 2px;
+}
+
+.cookie-notice__link:hover {
+  color: var(--text);
+}
+
+.cookie-notice__btn {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  transition:
+    color var(--dur-med),
+    border-color var(--dur-med),
+    background var(--dur-med);
+}
+
+.cookie-notice__btn:hover {
+  color: var(--text);
+  border-color: var(--rule-strong);
+  background: var(--paper-100);
+}
+
+@media (max-width: 640px) {
+  .cookie-notice {
+    inset-inline: var(--space-3);
+    inset-block-end: var(--space-3);
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cookie-notice__btn {
+    transition: none;
+  }
+}

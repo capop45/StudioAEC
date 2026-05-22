@@ -134,10 +134,11 @@ Variáveis opcionais: `CLERK_ADMIN_USER_IDS`, `CLERK_ADMIN_USERNAMES` (ver `web/
 - Configure `S3_BUCKET`, credenciais AWS e faça upload dos zips em `library/<trilha>/catalog.zip`
 - Download protegido por matrícula na trilha (`track_slug` em `library_assets`)
 
-### Deploy Vercel
+### Deploy
 
-- Guia completo: [`web/DEPLOY.md`](web/DEPLOY.md)
-- Root Directory na Vercel: `web`
+- **Local (testes):** `.\scripts\deploy-local.ps1` — ver [`docs/PLATFORM_TOOLS_ANALYSIS.md`](docs/PLATFORM_TOOLS_ANALYSIS.md)
+- **Produção (Vercel):** `.\scripts\deploy-production.ps1 -ProductionUrl https://seu-dominio`
+- Guia Vercel: [`web/DEPLOY.md`](web/DEPLOY.md) — Root Directory: `web`
 - Após deploy: `npm run rag:reindex` (com `OPENAI_API_KEY`) para embeddings reais
 
 ### Pós-roadmap (operacional)

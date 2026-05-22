@@ -29,6 +29,7 @@ src/
 │   ├── catalog/            # Trilhas, cursos, matrículas
 │   ├── content/            # Templates, bibliotecas, orientações
 │   ├── admin/              # Planejamento, relatórios
+│   ├── marketing/          # Pesquisa Reddit, export persona (admin)
 │   ├── ai/                 # RAG, chunks, tutor, retrieval logs
 │   └── commerce/           # Stripe, webhooks
 ├── components/             # UI compartilhada (Layout, Header, Icon…)
@@ -69,6 +70,24 @@ Entidades IA (RAG): `AiKnowledgeBase`, `AiDocumentChunk` (coluna `vector`), `AiP
 - Não inventar paradigmas de UI; familiaridade (Notion/Docs-like).
 - IA no criador: assistir tarefas tediosas (quiz, estrutura), não substituir julgamento humano.
 
+## 5.1 UI — LEGIBILIDADE E LAYOUT (OBRIGATÓRIO EM TODA ALTERAÇÃO DE IU)
+
+Antes de concluir qualquer mudança visual, verificar overflow horizontal, texto cortado e sobreposição. Referência de implementação: `web/src/styles/ui-layout.css`, tokens em `web/src/styles/tokens.css` (`--gutter`, `--content-max`).
+
+| Regra | O que fazer | Proibido |
+|-------|-------------|----------|
+| Contenção da página | Conteúdo dentro de `.container` / `.container--narrow`; `main.site-main` com `overflow-x: clip` | `100vw` em componentes fixos (scrollbar estoura); `margin` negativo para “full bleed” sem wrapper |
+| Largura máxima | `max-width: min(Xpx, 100%)` em painéis largos; `width: 100%` + `min-width: 0` em flex/grid filhos | Larguras fixas em px sem fallback responsivo |
+| Texto | `overflow-wrap: break-word`; títulos com `text-wrap: balance`; truncar só com `ellipsis` + `title` | `white-space: nowrap` em blocos longos; sobrepor label e valor no mesmo eixo sem `flex-wrap` |
+| Cabeçalhos de seção | `.section-head` empilha em coluna ≤720px; `.page-header__cartouche` empilha ≤600px | Título + metadados lado a lado em mobile estreito |
+| Botões / chips | `.btn` pode quebrar linha ≤720px; barras de filtro com `flex-wrap` | Fileiras de tabs/botões sem scroll ou wrap em telas estreitas |
+| Tabelas / Gantt | `overflow-x: auto` no wrapper, não na página inteira | Grid largo forçando scroll no `body` |
+| Tokens | Usar `--gutter` para padding horizontal; `--space-*` para ritmo | Padding horizontal hardcoded divergente do restante do site |
+
+**Checklist rápido (agente):** 320px · 768px · 1280px — sem barra horizontal; sem texto sobre texto; nada cortado nas bordas laterais.
+
+**Header:** logo só como imagem (`/images/brand/logo-horizontal.png`); layout em grid `auto | 1fr | auto` (nunca `space-between` com nav `flex:1` sobre o logo). **Navegação:** scroll padrão do Next (`scroll` em `Link`); `scroll-behavior: smooth` no `html` para âncoras.
+
 ## 6. CÓDIGO E SEGURANÇA
 
 - Idioma do código: **inglês** (`PascalCase` classes, `camelCase` funções).
@@ -77,7 +96,15 @@ Entidades IA (RAG): `AiKnowledgeBase`, `AiDocumentChunk` (coluna `vector`), `AiP
 - DRY; um arquivo, um propósito; sem dead code.
 - Abordagem dinâmica: config e conteúdo em `src/content/` e env — evitar hardcoding.
 
-## 7. PROTOCOLO DO AGENTE
+## 7. MARKETING DIRECIONADO (REDDIT / AEC)
+
+Antes de implementar ou alterar qualquer fluxo de **marketing**, **personas**, **pesquisa de audiência**, **anúncios impulsionados**, **copy de campanha** ou a aba **Admin → Planejamento → Marketing**:
+
+1. Ler e seguir integralmente `docs/MARKETING_REDDIT_STRATEGY.md` (estratégia derivada do relatório Reddit: first-party data, mineração de dores, broad targeting, matriz de ferramentas).
+2. Usar o painel em `web/src/features/marketing/` e APIs `web/src/app/api/admin/marketing/` (somente admin).
+3. Não reintroduzir dependência de cookies de terceiros ou “Big Data” psicográfico genérico para segmentação.
+
+## 9. PROTOCOLO DO AGENTE
 
 - Entregar código **completo e funcional** (sem `...` ou “resto do código”).
 - Ao violar regras, corrigir com refactor alinhado ao padrão ouro.

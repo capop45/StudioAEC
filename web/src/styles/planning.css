@@ -8,14 +8,16 @@
   flex-direction: column;
   background: var(--paper-50);
   color: var(--ink-900);
-  margin: 0 calc(var(--gutter) * -1);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .planning-topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4) var(--space-6);
+  padding: var(--space-4) var(--gutter);
   background: var(--surface);
   border-block-end: 1px solid var(--rule);
   gap: var(--space-4);
@@ -32,8 +34,10 @@
 
 .view-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 0;
   border: 1px solid var(--ink-900);
+  max-width: 100%;
 }
 
 .view-tabs button {
@@ -59,8 +63,9 @@
 
 .planning-body {
   flex: 1;
-  padding: var(--space-6) var(--space-6) var(--space-12);
+  padding: var(--space-6) var(--gutter) var(--space-12);
   overflow: auto;
+  min-width: 0;
 }
 
 /* Board (lista) */

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AppLink } from '@/components/AppLink';
 import { TrackIcon } from '@/components/TrackIcon';
 import { TreinamentosCoursesFilter } from '@/features/catalog/components/TreinamentosCoursesFilter';
 import type { CourseDto, CourseTrackDto } from '@/features/catalog/types';
@@ -67,7 +67,7 @@ export function TreinamentosView({ tracks, courses, year }: TreinamentosViewProp
 
           <div className="tracks-grid">
             {tracks.map((track, idx) => (
-              <Link
+              <AppLink
                 key={track.id}
                 href={`/treinamentos/${track.slug}`}
                 className="track-card"
@@ -89,7 +89,7 @@ export function TreinamentosView({ tracks, courses, year }: TreinamentosViewProp
                     conteúdo
                   </span>
                 </div>
-              </Link>
+              </AppLink>
             ))}
           </div>
         </div>

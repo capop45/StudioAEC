@@ -1,0 +1,349 @@
+.marketing-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: min(1100px, 100%);
+  min-width: 0;
+}
+
+.marketing-panel__intro {
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  font-size: var(--fs-200);
+  line-height: 1.55;
+}
+
+.marketing-panel__intro code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+}
+
+.marketing-link {
+  display: inline-block;
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.marketing-section {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: var(--space-5);
+}
+
+.marketing-section h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-400);
+  font-weight: 400;
+  margin-bottom: var(--space-4);
+}
+
+.marketing-section h3 {
+  font-size: var(--fs-300);
+  margin-bottom: var(--space-2);
+}
+
+.marketing-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.marketing-form-row--2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+@media (max-width: 720px) {
+  .marketing-form-row--2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.marketing-form-row label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--fs-200);
+}
+
+.marketing-form-row input,
+.marketing-form-row textarea,
+.marketing-form-row select {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--rule);
+  background: var(--paper-50);
+  font-family: inherit;
+  font-size: var(--fs-200);
+}
+
+.marketing-subs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.marketing-subs__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  width: 100%;
+}
+
+.marketing-chip {
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  border: 1px solid var(--ink-900);
+  background: transparent;
+}
+
+.marketing-chip.active {
+  background: var(--ink-900);
+  color: var(--paper-50);
+}
+
+.marketing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.marketing-error {
+  color: var(--oxide-700, #8b3a2a);
+  margin-top: var(--space-2);
+  font-size: var(--fs-200);
+}
+
+.marketing-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+@media (max-width: 600px) {
+  .marketing-stats__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.marketing-stat-card {
+  border: 1px solid var(--rule);
+  padding: var(--space-3);
+  text-align: center;
+}
+
+.marketing-stat-card__value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-500);
+}
+
+.marketing-stat-card__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.marketing-keywords {
+  font-size: var(--fs-200);
+  line-height: 1.5;
+}
+
+.marketing-posts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-height: 420px;
+  overflow: auto;
+}
+
+.marketing-post {
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.marketing-post h3 {
+  font-size: var(--fs-300);
+  font-weight: 500;
+}
+
+.marketing-post h3 a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.marketing-post__meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-100);
+  color: var(--ink-600);
+  margin-top: var(--space-1);
+}
+
+.marketing-post__preview {
+  font-size: var(--fs-200);
+  margin-top: var(--space-2);
+  color: var(--ink-700);
+}
+
+.marketing-phase ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.marketing-phase li {
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-200);
+}
+
+.marketing-phase label {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.marketing-imports {
+  margin-top: var(--space-3);
+  font-size: var(--fs-200);
+}
+
+.marketing-tool-group {
+  margin-bottom: var(--space-5);
+}
+
+.marketing-tool-group ul {
+  list-style: none;
+  padding: 0;
+}
+
+.marketing-tool-group li {
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-200);
+  line-height: 1.45;
+}
+
+.marketing-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.marketing-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--rule);
+}
+
+.marketing-badge--free {
+  background: #e8f5e9;
+  border-color: #2e7d32;
+  color: #1b5e20;
+}
+
+.marketing-badge--freemium {
+  background: #e3f2fd;
+  border-color: #1565c0;
+  color: #0d47a1;
+}
+
+.marketing-badge--trial {
+  background: #fff8e1;
+  border-color: #f9a825;
+  color: #e65100;
+}
+
+.marketing-badge--paid {
+  background: var(--paper-100, #f5f2eb);
+  border-color: var(--ink-700);
+  color: var(--ink-800);
+}
+
+.marketing-badge--discontinued {
+  background: #ffebee;
+  border-color: #c62828;
+  color: #b71c1c;
+}
+
+.marketing-tool__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.marketing-tool__head a {
+  font-weight: 600;
+}
+
+.marketing-tool__name-muted {
+  font-weight: 600;
+  text-decoration: line-through;
+  color: var(--ink-600);
+}
+
+.marketing-tool__pricing {
+  display: block;
+  font-size: var(--fs-100);
+  color: var(--ink-600);
+  font-family: var(--font-mono);
+}
+
+.marketing-tool__status-note,
+.marketing-tool__replaces {
+  font-size: var(--fs-100);
+  color: var(--oxide-700, #8b3a2a);
+  margin: var(--space-1) 0;
+}
+
+.marketing-tool--discontinued {
+  opacity: 0.85;
+}
+
+.marketing-tools-grid--deprecated {
+  border-color: #c62828;
+  background: #fffafa;
+}
+
+.marketing-tools-disclaimer {
+  font-size: var(--fs-200);
+  margin-bottom: var(--space-4);
+  color: var(--ink-700);
+}
+
+.marketing-tool-group li a {
+  font-weight: 600;
+  margin-right: var(--space-2);
+}
+
+.marketing-tool-group li span {
+  display: block;
+  color: var(--ink-700);
+}
+
+.marketing-tool-group li em {
+  display: block;
+  font-size: var(--fs-100);
+  color: var(--ink-600);
+  font-style: normal;
+  font-family: var(--font-mono);
+}

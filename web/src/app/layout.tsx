@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
 import { IBM_Plex_Mono, IBM_Plex_Sans, Fraunces } from 'next/font/google';
 import { ConditionalSiteShell } from '@/components/ConditionalSiteShell';
+import { CookieNotice } from '@/features/legal/components/CookieNotice';
 import { clerkAppearance, clerkLocalization } from '@/lib/clerk-config';
 import './globals.css';
 
@@ -45,6 +46,7 @@ export default function RootLayout({
             Ir para o conteúdo
           </a>
           <ConditionalSiteShell>{children}</ConditionalSiteShell>
+          <CookieNotice />
         </ClerkProvider>
       </body>
     </html>

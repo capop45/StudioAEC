@@ -1,7 +1,9 @@
 @import './tokens.css';
+@import './ui-layout.css';
 @import './layout.css';
 @import './components.css';
 @import './pages.css';
+@import './legal.css';
 
 *,
 *::before,
@@ -187,10 +189,22 @@ select {
   overflow-wrap: break-word;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 720px) {
   .btn {
     white-space: normal;
     text-align: center;
     hyphens: auto;
   }
+}
+
+/* Tabelas e blocos de código não estouram o container */
+table,
+pre,
+code {
+  max-width: 100%;
+}
+
+pre,
+.table-scroll {
+  overflow-x: auto;
 }

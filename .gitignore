@@ -23,6 +23,8 @@ Thumbs.db
 .env.production
 *.secret
 appsettings.Local.json
+scripts/deploy/secrets.local.env
+scripts/deploy/secrets.production.env
 
 # Logs
 *.log

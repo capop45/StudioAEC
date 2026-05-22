@@ -1,0 +1,78 @@
+/* UI Layout System — legibilidade, contenção horizontal, flex/grid seguros.
+   Referenciado em .cursorrules e CLAUDE.md (§ UI — Legibilidade). */
+
+.site-main {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.container,
+.container--narrow {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Filhos flex/grid devem poder encolher — evita texto cortado nas bordas */
+.section-head,
+.section-head__copy,
+.section-head__aside,
+.page-header__bar,
+.page-header__cartouche > div,
+.planning-topbar,
+.planning-topbar h1,
+.planning-topbar .view-tabs,
+.hero__plate,
+.hero__copy,
+.hero__cta,
+.hero__trust > div,
+.header-actions,
+.primary-nav,
+.top-bar__inner,
+.top-bar__contact,
+.dashboard__panel-head,
+.dashboard__enrollment-meta,
+.dashboard__enrollment-progress,
+.contact-info__row > div,
+.marketing-panel,
+.cta-strip,
+.filters-bar {
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .page-header__bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page-header__cartouche {
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .page-header__cartouche > div {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__visual-overlay {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .planning-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .planning-topbar .view-tabs {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

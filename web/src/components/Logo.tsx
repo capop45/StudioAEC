@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import Image from 'next/image';
+import { AppLink } from '@/components/AppLink';
 
 interface LogoProps {
   variant?: 'default' | 'inverse';
@@ -6,19 +7,20 @@ interface LogoProps {
 
 export function Logo({ variant = 'default' }: LogoProps) {
   return (
-    <Link
+    <AppLink
       href="/"
       className="logo"
       aria-label="Estúdio AEC — Página inicial"
       data-variant={variant}
     >
-      <span className="logo__mark" aria-hidden="true">
-        EA
-      </span>
-      <span className="logo__type">
-        <b>Estúdio AEC</b>
-        <span>Manual de prática BIM</span>
-      </span>
-    </Link>
+      <Image
+        src="/images/brand/logo-horizontal.png"
+        alt=""
+        width={200}
+        height={48}
+        className="logo__image"
+        priority
+      />
+    </AppLink>
   );
 }
